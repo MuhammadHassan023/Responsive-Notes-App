@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Admin Login | Hisaub Kitaab</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-slate-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-12 rounded-[40px] shadow-2xl w-full max-w-md border-b-8 border-blue-600">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-black text-gray-800">Admin Login</h2>
+            <p class="text-gray-400 mt-2 font-medium">Verify your credentials</p>
+        </div>
+        <% if(error) { %> <div class="bg-red-50 text-red-600 p-4 mb-6 rounded-2xl text-center font-bold border border-red-100"><%= error %></div> <% } %>
+        <form action="/admin-login" method="POST">
+            <div class="mb-5">
+                <input type="text" name="username" placeholder="Admin Username" class="w-full p-5 bg-gray-50 border-2 border-gray-50 rounded-2xl outline-none focus:border-blue-400 focus:bg-white transition-all font-bold" required autofocus>
+            </div>
+            <div class="mb-8">
+                <input type="password" name="password" placeholder="Secret Password" class="w-full p-5 bg-gray-50 border-2 border-gray-50 rounded-2xl outline-none focus:border-blue-400 focus:bg-white transition-all font-bold" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-black py-5 rounded-2xl shadow-xl shadow-blue-100 hover:bg-blue-700 active:scale-95 transition-all">Verify & Enter</button>
+        </form>
+        <div class="mt-8 text-center"><a href="/login" class="text-gray-400 font-bold hover:text-blue-600 transition underline decoration-dotted">← Back to User Login</a></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Admin Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-xl">
+        <div class="flex justify-between items-center mb-10">
+            <h1 class="text-3xl font-black text-gray-800 tracking-tight">Admin Panel</h1>
+            <a href="/" class="text-blue-600 font-bold hover:underline">← Dashboard</a>
+        </div>
+
+        <div class="bg-slate-50 p-6 rounded-2xl mb-10 border-2 border-dashed border-slate-200">
+            <h2 class="font-bold text-gray-500 mb-4 uppercase text-xs tracking-widest text-center">Admin Settings (Username & Password)</h2>
+            <form action="/admin/update-profile" method="POST" class="flex flex-col md:flex-row gap-4">
+                <input type="text" name="newUsername" value="<%= adminData.username %>" class="border p-4 rounded-xl flex-1 bg-white outline-none focus:ring-2 focus:ring-blue-400" placeholder="New Admin Username" required>
+                <input type="password" name="newPassword" value="<%= adminData.password %>" class="border p-4 rounded-xl flex-1 bg-white outline-none focus:ring-2 focus:ring-blue-400" placeholder="New Admin Password" required>
+                <button type="submit" class="bg-black text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-800 transition">Update Admin</button>
+            </form>
+        </div>
+
+        <div class="bg-blue-600 p-8 rounded-2xl mb-10 shadow-lg shadow-blue-100 text-white">
+            <h2 class="font-bold mb-4 uppercase text-xs opacity-80">Naya User Add Karein</h2>
+            <form action="/admin/add-user" method="POST" class="flex flex-col md:flex-row gap-4">
+                <input type="text" name="name" placeholder="User Name" class="p-4 rounded-xl flex-1 text-gray-800 outline-none" required>
+                <input type="password" name="password" placeholder="Password" class="p-4 rounded-xl flex-1 text-gray-800 outline-none" required>
+                <button type="submit" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-black hover:bg-blue-50 transition">Add User</button>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-100">
+                    <tr>
+                        <th class="p-5 font-bold text-gray-400 uppercase text-xs">User Information</th>
+                        <th class="p-5 font-bold text-gray-400 uppercase text-xs">Status</th>
+                        <th class="p-5 font-bold text-gray-400 uppercase text-xs text-center">Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(u => { %>
+                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+                            <td class="p-5">
+                                <p class="font-bold text-gray-800 capitalize text-lg"><%= u.name %></p>
+                                <p class="text-xs text-gray-400 lowercase">Member Since: 2026</p>
+                            </td>
+                            <td class="p-5">
+                                <span class="px-4 py-1 rounded-full text-[10px] font-black <%= u.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' %>">
+                                    <%= u.isActive ? 'ACTIVE' : 'BLOCKED' %>
+                                </span>
+                            </td>
+                            <td class="p-5 text-center">
+                                <form action="/admin/toggle-status/<%= u.id %>" method="POST">
+                                    <button type="submit" class="text-xs font-bold px-5 py-2 rounded-xl border-2 <%= u.isActive ? 'border-red-100 text-red-500 hover:bg-red-500 hover:text-white' : 'border-green-100 text-green-500 hover:bg-green-500 hover:text-white' %> transition-all">
+                                        <%= u.isActive ? 'Block Access' : 'Unblock Access' %>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

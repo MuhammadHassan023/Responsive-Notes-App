@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hisaab Kitaab - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans antialiased text-gray-900">
+
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-20 flex justify-between items-center">
+            <h1 class="text-2xl font-black text-blue-600 tracking-tighter italic">Hisaab Kitaab</h1>
+            
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden md:block">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Logged In As</p>
+                    <p class="font-bold text-gray-800 capitalize"><%= user.name %></p>
+                </div>
+                
+                <div class="flex gap-2">
+                    <a href="/profile" class="bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-600 p-2.5 rounded-xl transition-all duration-300" title="Account Settings">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </a>
+                    <a href="/logout" class="bg-red-50 hover:bg-red-500 hover:text-white text-red-500 p-2.5 rounded-xl transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-10">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-[30px] shadow-sm border-b-4 border-blue-500">
+                <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Mera Kharcha</p>
+                <p class="text-3xl font-black text-gray-800">Rs. <%= myPersonalSpent.toFixed(0) %></p>
+            </div>
+            <div class="bg-white p-6 rounded-[30px] shadow-sm border-b-4 border-green-500">
+                <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Maine Lene Hain</p>
+                <p class="text-3xl font-black text-green-600">Rs. <%= youAreOwed.toFixed(0) %></p>
+            </div>
+            <div class="bg-white p-6 rounded-[30px] shadow-sm border-b-4 border-red-500">
+                <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Maine Dene Hain</p>
+                <p class="text-3xl font-black text-red-500">Rs. <%= youOwe.toFixed(0) %></p>
+            </div>
+        </div>
+
+        <div class="flex justify-center mb-16">
+            <a href="/add" class="bg-blue-600 hover:bg-blue-700 text-white px-12 py-5 rounded-2xl font-black text-xl shadow-xl shadow-blue-100 transition-all hover:-translate-y-1 active:scale-95">
+                + Naya Bill Add Karein
+            </a>
+        </div>
+
+        <h2 class="text-2xl font-black text-gray-800 italic mb-8 ml-2">Pichla Hisaub-Kitab (Recent History)</h2>
+
+        <div class="space-y-8">
+            <% expenses.reverse().forEach(exp => { %>
+                <div class="bg-white rounded-[40px] shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-8 pb-4 flex justify-between items-start">
+                        <div>
+                            <h3 class="text-3xl font-black text-gray-800 capitalize mb-1"><%= exp.title %></h3>
+                            <p class="text-gray-400 font-bold text-sm">
+                                Pura Bill: <span class="text-gray-800">Rs. <%= exp.amount %></span> | 
+                                Paid by: <span class="text-blue-600 capitalize"><%= exp.paidBy %></span>
+                            </p>
+                        </div>
+                        <form action="/delete/<%= exp.id %>" method="POST">
+                            <button class="text-gray-300 hover:text-red-500 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="px-6 pb-8 space-y-2">
+                        <% exp.splits.forEach(person => { %>
+                            <div class="flex justify-between items-center p-4 rounded-2xl <%= person.isPaid ? 'bg-green-50/50' : 'bg-gray-50' %>">
+                                <div class="flex items-center gap-3">
+                                    <span class="font-bold text-gray-700 capitalize"><%= person.name %></span>
+                                    <% if(person.isPaid) { %>
+                                        <span class="bg-green-500 text-white text-[10px] font-black px-2 py-0.5 rounded-md flex items-center gap-1">
+                                            ✓ PAID
+                                        </span>
+                                    <% } %>
+                                </div>
+                                
+                                <% if(!person.isPaid && exp.paidBy.toLowerCase() === user.name.toLowerCase()) { %>
+                                    <form action="/mark-paid/<%= exp.id %>/<%= person.name %>" method="POST">
+                                        <button class="bg-white border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-4 py-1.5 rounded-xl text-xs font-black transition-all">
+                                            Receive Payment
+                                        </button>
+                                    </form>
+                                <% } else if(!person.isPaid) { %>
+                                    <span class="text-red-400 text-xs font-black italic tracking-widest">PENDING</span>
+                                <% } %>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <% if (expenses.length === 0) { %>
+            <div class="text-center py-20 bg-white rounded-[40px] border-2 border-dashed border-gray-200">
+                <p class="text-gray-400 font-bold">Abhi tak koi hisaub record nahi kiya gaya.</p>
+            </div>
+        <% } %>
+
+    </main>
+
+</body>
+</html>

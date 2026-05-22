@@ -1,0 +1,75 @@
+/* style.css */
+:root {
+    --primary: #3498db;
+    --secondary: #2ecc71;
+    --dark: #2c3e50;
+    --light: #f4f7f6;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--light);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.header {
+    text-align: center;
+    border-bottom: 2px solid var(--primary);
+    margin-bottom: 20px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+}
+
+.owe { background-color: #e74c3c; }
+.owed { background-color: #2ecc71; }
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn:hover { background: #2980b9; }
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .card-grid { grid-template-columns: 1fr; }
+}

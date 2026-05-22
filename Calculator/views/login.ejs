@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Hisaub Kitaab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+    <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md border-t-8 border-blue-500">
+        <div class="text-center mb-8">
+            <div class="text-4xl mb-2">🔐</div>
+            <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">Login</h2>
+            <p class="text-gray-400 mt-2 text-sm italic">Apna account access karein</p>
+        </div>
+
+        <% if(error) { %>
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-lg">
+                <p class="text-red-700 text-sm font-bold"><%= error %></p>
+            </div>
+        <% } %>
+
+        <form action="/login" method="POST">
+            <div class="mb-5">
+                <input 
+                    type="text" 
+                    name="name" 
+                    placeholder="Username" 
+                    class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-50 transition-all bg-gray-50" 
+                    required
+                >
+            </div>
+
+            <div class="mb-8">
+                <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Password" 
+                    class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-50 transition-all bg-gray-50" 
+                    required
+                >
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl shadow-lg shadow-blue-100 transition-all active:scale-95">
+                Login
+            </button>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+            <p class="text-gray-400 text-xs mb-3 uppercase tracking-widest font-bold">System Management</p>
+            <a href="/admin-login" class="inline-block bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-6 rounded-xl transition-all text-sm border border-gray-200">
+                Log in as Admin
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

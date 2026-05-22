@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Bill</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+        <h1 class="text-2xl font-bold mb-6">Naya Bill Add Karein</h1>
+        
+        <form action="/add" method="POST" onsubmit="return checkDuplicate(event)">
+            <div class="mb-5">
+                <label class="block font-bold mb-2 text-gray-700">Bill ka Title</label>
+                <input type="text" name="title" class="w-full p-4 border rounded-xl" placeholder="Pizza, Petrol, etc." required>
+            </div>
+            
+            <div class="mb-5">
+                <label class="block font-bold mb-2 text-gray-700">Amount (Rs.)</label>
+                <input type="number" name="amount" class="w-full p-4 border rounded-xl" placeholder="1500" required>
+            </div>
+            
+            <div class="mb-8">
+                <label class="block font-bold mb-2 text-gray-700">Doston ke Naam (Comma use karein)</label>
+                <input type="text" id="friendsInput" name="friends" class="w-full p-4 border rounded-xl" placeholder="hassan, zohaib, ahmad" required>
+                <p class="text-xs text-gray-400 mt-2">Example: hassan, zohaib, ahmad</p>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition">
+                Add Bill
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function checkDuplicate(event) {
+            const input = document.getElementById('friendsInput');
+            let names = input.value.split(',').map(n => n.trim().toLowerCase()).filter(n => n !== "");
+            
+            // Duplicate check logic
+            const duplicates = names.filter((item, index) => names.indexOf(item) !== index);
+            
+            if (duplicates.length > 0) {
+                const isConfirmed = confirm(`Aapne "${duplicates[0]}" ka naam 2 dafa likha hai. Kya ye Admin/Purana banda hi hai? \n\nOK = Haan (Ek hi dafa add hoga)\nCancel = Nahi (Do alag bande add honge)`);
+                
+                if (isConfirmed) {
+                    // Remove duplicate
+                    const uniqueNames = [...new Set(names)];
+                    input.value = uniqueNames.join(', ');
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
